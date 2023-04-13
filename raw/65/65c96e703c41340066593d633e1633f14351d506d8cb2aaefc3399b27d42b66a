@@ -1,0 +1,81 @@
+
+回顾：3月7号
+MapReduce: 分布式计算模型
+           来源：PageRank（网页排名）
+		   计算的过程中，产生大量I/O操作（MapReduce的核心：Shuffle洗牌）
+		   
+怎么学习大数据？学什么？
+1、原理和体系结构
+2、安装配置
+3、操作
+
+============================================
+一、为什么选择Spark？什么是Spark？
+	1、优势：基于内存
+	2、什么是Spark？
+		Apache Spark™ is a fast and general engine for large-scale data processing. 
+		就是计算处理模型（引擎，类似MapReduce）
+	
+	3、Spark的特点
+		（1）快：基于内存
+		（2）易用：Java、Scala、Python
+		（3）通用
+				Spark的生态圈
+				
+		（4）兼容性：HDFS
+
+二、Spark的体系结构与安装配置（重点）
+	1、支持安装模式：伪分布、全分布
+	2、以伪分布为例（一台）
+		（*）准备环境：RedHat Linux、JDK 1.8
+		               配置主机名、免密码登录、关闭防火墙
+					   
+		（*）配置Spark
+			 解压 tar -zxvf spark-2.1.0-bin-hadoop2.7.tgz -C ~/training/
+			 核心的配置文件：conf/spark-env.sh 
+			         cp spark-env.sh.template spark-env.sh
+			 修改 spark-env.sh
+				export JAVA_HOME=/root/training/jdk1.8.0_144
+				export SPARK_MASTER_HOST=mydemo71
+				export SPARK_MASTER_PORT=7077
+				
+		（*）启动:sbin/start-all.sh
+		（*）Web Console： http://192.168.157.71:8080
+
+三、使用spark-shell和spark-submit（工具）
+	1、spark-shell: 是交互式命令行工具
+		bin/spark-shell --master spark://mydemo71:7077
+
+		wordcount:
+		sc.textFile("/root/temp/data.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).collect
+
+	2、使用spark-submit工具（真正在项目中提交任务的工具）
+		（1）把任务打包成jar文件
+		（2）spark-submit提交任务
+			example例子：
+			/root/training/spark-2.1.0-bin-hadoop2.7/examples/jars/spark-examples_2.11-2.1.0.jar
+			
+		（3）Demo：蒙特卡罗求PI: 3.1415926*********
+		       bin/spark-submit --master spark://mydemo71:7077 --class org.apache.spark.examples.SparkPi examples/jars/spark-examples_2.11-2.1.0.jar 100
+			   
+				Pi is roughly 3.1407087140708714
+		
+四、实战项目：网站日志分析
+	1、工具：IDEA（类似eclipse）
+
+
+五、Spark实时处理框架（Spark的生态圈）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
