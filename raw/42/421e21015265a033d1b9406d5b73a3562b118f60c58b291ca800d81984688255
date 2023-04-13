@@ -1,0 +1,64 @@
+import org.apache.spark.{SparkConf, SparkContext}
+
+object MyWebLogCount {
+  def main(args: Array[String]): Unit = {
+    //求出：访问量最高的两个网页
+    /*
+    hudyi_3183：老师，请问如何保证提交的jar包没有bug?
+    实际开发中，1、在开发工具中开发，测试  ----> 采用local模式
+                2、部署
+     */
+    //定义一个SparkConf（配置参数）
+    val conf = new SparkConf().setAppName("MyWebLogCount").setMaster("local")
+
+    //创建一个SparkContext对象
+    val sc = new SparkContext(conf)
+
+    //读入数据
+    //数据: 192.168.88.1 - - [30/Jul/2017:12:54:41 +0800] "GET /MyDemoWeb/hadoop.jsp HTTP/1.1" 200 242
+    val rdd1 = sc.textFile("D:\\temp\\localhost_access_log.2017-07-30.txt")
+                   .map(line=>{
+                      //首先得到： GET /MyDemoWeb/hadoop.jsp HTTP/1.1
+                     val index1 = line.indexOf("\"")  //第一个双引号的位置
+                     val index2 = line.lastIndexOf("\"") //第二个双引号的位置
+                     val line1 = line.substring(index1+1,index2)
+
+                     //得到: /MyDemoWeb/hadoop.jsp
+                     val index3 = line1.indexOf(" ")
+                     val index4 = line1.lastIndexOf(" ")
+                     val line2 = line1.substring(index3+1,index4)
+
+                     //得到网页的名字：hadoop.jsp
+                     val jspName = line2.substring(line2.lastIndexOf("/")+1)
+
+                     //返回：(jspname,1)
+                     (jspName,1)
+                   })
+    //按照key进行累加，得到每个网页访问的总量
+    val rdd2 = rdd1.reduceByKey(_+_) // 结果：(hadoop.jsp,5)
+
+    //按照累加的结果排序
+    val rdd3 = rdd2.sortBy(_._2,false)
+
+    //取出访问量最高的网页
+    println(rdd3.take(2).toBuffer)
+
+    sc.stop()
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
