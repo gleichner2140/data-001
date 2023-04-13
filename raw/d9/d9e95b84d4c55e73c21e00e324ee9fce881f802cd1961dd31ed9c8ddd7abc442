@@ -1,0 +1,110 @@
+
+
+演示Demo：使用Spark处理数据：WordCount 单词计数
+ sc.textFile("hdfs://192.168.157.11:9000/input/data.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).collect
+
+一、Scala语言基础
+	1、Scala是一种多范式的编程语言
+		支持多种方式的编程：（1）面向对象
+		                    （2）函数式编程：注意:Java 8也支持了函数式编程
+							
+	2、搭建Scala的运行环境: 注意：不管安装JDK还是Scala，安装路径中一定不能有空格
+		（1）前提：安装JDK
+		（2）安装Scala跟安装JDK完全一样 ：scala-2.12.4.zip  
+		      设置环境变量：SCALA_HOME
+			               把%SCALA_HOME%/bin ---> PATH 路径
+						   
+	3、Scala开发环境
+		（1）REPL：命令行
+		（2）IDEA： 安装Scala的插件
+		（3）Scala IDE：就是Eclipse
+
+二、Scala语言的函数式编程
+	1、Scala如何定义变量
+	    val: 常量
+		var: 变量
+		
+		var a:Int = 1
+		val b:Int = 2
+		
+		注意：在Scala中，定义变量的时候，可以不指定类型 ---> Scala自动进行类型推导
+			var a = 1
+			val b = 2	
+
+	2、如何定义函数：关键字 def
+		(1) 求和
+			def sum(x:Int,y:Int):Int = x+y
+			函数名称：sum
+			
+		(2) 求阶乘
+				def myFactor(x:Int):Int = {
+				   if(x<=1)
+					   1
+				   else
+					   x*myFactor(x-1)
+				}
+			函数名称：myFactor
+				注意：在Scala中，if..else 是一个表达式。表达式的最后一句话，就是表达式返回值
+
+	3、匿名函数：没有名字函数
+	   (1) 定义一个匿名函数，求某个值*3
+	       (x:Int) => x*3
+		   res3: Int => Int = <function1>
+		        第一个Int：表示函数的参数
+				第二个Int：表示函数的返回值
+		   举例:
+		   Array(1,2,3).map((x:Int) => x*3)
+		   Array(1,2,3).map( _ * 3)
+		   
+	4、什么是高阶函数？把某个函数作为另一个函数的参数值
+		(1) 普通函数:
+		     def fun1(name:String):String = "Hello " + name
+			 
+		(2) 对10进行计算：对10开平方、对10求sin（cos***）
+		     def someAction(f:(Double)=>Double) = f(10)
+			 
+			 只要满足：函数参数是一个double、返回值也是一个double，这个函数就可以作为f值
+		
+		     someAction(sqrt)
+			 
+		(3) 举例 
+		      def mytest(x:Int,y:Int):Int = {x*y + 100}
+			  
+			  定义一个高阶函数
+			  def myfunc2(f:(Int,Int)=>Int,x:Int,y:Int)= f(x,y)
+				
+
+三、高阶函数示例
+	1、map: 把集合中的每个元素取出来，进行某个操作（定义的匿名函数）------> 有一个返回值
+	2、foreach: 把集合中的每个元素取出来，进行某个操作（定义的匿名函数）---> 没有返回值
+	      val numbers = List(1,2,3,4,5,6,7,8,9,10)
+		  
+		  numbers.map((i:Int)=> i*2)   ----> 会生成一个新的List
+		  numbers.foreach((i:Int)=> i*2)
+	
+	3、filter
+	4、partition
+	5、find
+	6、flatMap
+	
+四、Spark中的高级算子（函数、方法）
+	1、mapPartitionsWithIndex
+	2、aggregate
+	3、aggregateByKey
+	4、coalesce与repartition
+	5、其他高级算子
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
