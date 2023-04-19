@@ -1,0 +1,67 @@
+body {
+    color: #1a1a1a;
+    font: 15px/1.6 Helvetica,'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','メイリオ',Meiryo,'ＭＳ Ｐゴシック',HirakakuProN-W3,sans-serif;
+    -webkit-text-size-adjust: 100%
+}
+
+h3 {
+    font-size: 120%;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.gaiji {
+    height: 1em
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+table {
+    width: 100%;
+    margin-top: 30px
+}
+
+table {
+    width: 100%;
+    margin-top: 30px;
+    table-layout: fixed
+}
+
+table thead td
+table thead th {
+    padding: 5px 0;
+    border-top: 1px solid #1a1a1a;
+    font-weight: 700;
+    vertical-align: top
+}
+
+table tbody td,
+table tbody th {
+    padding: 5px 0;
+    border-top: 1px solid #e6e6e6;
+    vertical-align: top
+}
+
+table tbody .last td,
+table tbody .last th {
+    padding: 5px 0 0
+}
+
+table tr>th {
+    border-right: 10px solid #fff
+}
+
+table tbody th {
+    white-space: nowrap
+}
+
+table tbody td {
+    /*width: 90%*/
+}
+
+img {
+    border: 0
+}
