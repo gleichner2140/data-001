@@ -1,0 +1,169 @@
+<?php 
+/*
+* ----------------------------------------------------------------------------------------------------
+* Style Page
+* @PACKAGE BY HAWKTHEME
+* ----------------------------------------------------------------------------------------------------
+*/
+$styles = array(
+		'blue' => esc_html__('蓝色','HK'),
+		'coffee' => esc_html__('咖啡色','HK'),
+		'grey' => esc_html__('灰色','HK'),
+		'green' => esc_html__('绿色','HK'),
+		'red' => esc_html__('红色','HK')
+);
+
+
+$repeat_options = array(
+		'no-repeat' => esc_html__('不重复','HK'),
+		'repeat-x' => esc_html__('只有水平重复','HK'),
+		'repeat-y' => esc_html__('只有垂直重复','HK'),
+		'repeat' => esc_html__('重复两垂直和水平','HK')
+);
+
+$horizontal_options = array(
+		'left' => esc_html__('在左面','HK'),
+		'right' => esc_html__('右边','HK'),
+		'center' => esc_html__('于中心','HK')
+);
+
+$vertical_options = array(
+		'top' => esc_html__('顶部','HK'),
+		'bottom' => esc_html__('底部','HK'),
+		'center' => esc_html__('于中心','HK')
+);
+
+$attachment_options = array(
+		'fixed' => esc_html__('固定','HK'),
+		'scroll' => esc_html__('滚动','HK'),
+);
+
+$options = array(
+
+	array(
+			'name' => esc_html__('风格设置', 'HK'),
+			'type' => 'title'
+	),
+
+	array('type' => 'head'),
+
+	array(
+			'name' => esc_html__('样式 ','HK'),
+			'desc' => esc_html__('选择一种风格默认风格。','HK'),
+			'id' => 'current_style',
+			'std' => '灰色 ',
+			'options' => $styles,
+			'type' => 'radio',
+	),
+
+	array(
+			'name' => esc_html__('文字颜色','HK'),
+			'desc' => esc_html__('如果你想自定义颜色，你可以用拾色器选择颜色。如果没有，你可以让它空白','HK'),
+			'id' => 'text_color',
+			'std' => '',
+			'size' => '10',
+			'type' => 'color',
+	),
+
+	array(
+			'name' => esc_html__('链接文字颜色','HK'),
+			'desc' => esc_html__('如果你想自定义颜色，你可以用拾色器选择颜色。如果没有，你可以让它空白。','HK'),
+			'id' => 'link_color',
+			'std' => '',
+			'size' => '10',
+			'type' => 'color',
+	),
+
+	array(
+			'name' => esc_html__('悬停颜色','HK'),
+			'desc' => esc_html__('如果你想自定义颜色，你可以用拾色器选择颜色。如果没有，你可以让它空白。','HK'),
+			'id' => 'hover_color',
+			'std' => '',
+			'size' => '10',
+			'type' => 'color',
+	),
+
+	array(
+			'name' => esc_html__('背景','HK'),
+			'desc' => esc_html__('选择一个主题的模式背景.','HK'),
+			'id' => 'body_pattern',
+			'std' => '10',
+			'options' => array(
+				'0' => esc_html__('禁用模式','HK'),
+				'1' => esc_html__('Bg 1','HK'),
+				'2' => esc_html__('Bg 2','HK'),
+				'3' => esc_html__('Bg 3','HK'),
+				'4' => esc_html__('Bg 4','HK'),
+				'5' => esc_html__('Bg 5','HK'),
+				'6' => esc_html__('Bg 6','HK'),
+				'7' => esc_html__('Bg 7','HK'),
+				'8' => esc_html__('Bg 8','HK'),
+				'9' => esc_html__('Bg 9','HK'),
+				'10' => esc_html__('Bg 10','HK'),
+			),
+			'type' => 'select',
+	),
+	
+	array('type' => 'foot'),
+
+	array(
+			'name' => esc_html__('自定义背景 ', 'HK'),
+			'type' => 'sub_title',
+	),
+
+	array('type' => 'head'),
+
+	array(
+			'name' => esc_html__('图象','HK'),
+			'desc' => '上传背景图像。 ',
+			'id' => 'body_bg_image',
+			'std' => '',
+			'title' => '输入网址或上传图片：',
+			'size' => '70',
+			'button' => esc_html__('上传图片','HK'),
+			'type' => 'upload',
+	),
+
+	array(
+			'name' => esc_html__('属性','HK'),
+			'desc' => '',
+			'id' => 'body_bg_properties',
+			'std' => '不重复',
+			'options' => $repeat_options,
+			'type' => 'select',
+	),
+
+	array(
+			'name' => esc_html__('水平位置','HK'),
+			'desc' => '',
+			'id' => 'body_bg_horizontal',
+			'std' => '在左面',
+			'options' => $horizontal_options,
+			'type' => 'select',
+	),
+
+	array(
+			'name' => esc_html__('垂直','HK'),
+			'desc' => '',
+			'id' => 'body_bg_vertical',
+			'std' => '顶部',
+			'options' => $vertical_options,
+			'type' => 'select',
+	),
+
+	array(
+			'name' => esc_html__('附件','HK'),
+			'desc' => '',
+			'id' => 'body_bg_attachment',
+			'std' => '滚动',
+			'options' => $attachment_options,
+			'type' => 'select',
+	),
+
+	array('type' => 'foot'),
+
+);
+
+return array('auto' => true, 'name' => 'style', 'options' => $options );
+
+?>
