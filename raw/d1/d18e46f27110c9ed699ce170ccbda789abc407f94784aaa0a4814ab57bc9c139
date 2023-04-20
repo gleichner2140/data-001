@@ -1,0 +1,121 @@
+<?php 
+/*
+* ----------------------------------------------------------------------------------------------------
+* Metaboxes for product
+* @PACKAGE BY HAWKTHEME
+* ----------------------------------------------------------------------------------------------------
+*/
+$config = array(
+	'title' => esc_html__('产品设置','HK'),
+	'id' => 'product_meta_boxes',
+	'pages' => array('product'),
+	'callback' => '',
+	'context' => 'normal',
+	'priority' => 'high',
+);
+
+
+$options = array(
+
+	array(
+			'name' => esc_html__('产品详情', 'HK'),
+			'type' => 'title',
+			'desc' => esc_html__('将产品细节在这里,你可以设置你的价格和外部链接的url。','HK'),
+	),
+
+	array(
+			'name' => esc_html__('原价格 ','HK'),
+			'desc' => esc_html__('如果你不想表现出这种,只要把它空白。','HK'),
+			'id' => 'product_original_price',
+			'std' => '50',
+			'size' => '20',
+			'type' => 'text',
+	),
+
+	array(
+			'name' => esc_html__('折扣价格 ','HK'),
+			'id' => 'product_discount_price',
+			'std' => '39',
+			'size' => '20',
+			'type' => 'text',
+	),
+
+	array(
+			'name' => esc_html__('外部链接','HK'),
+			'desc' => esc_html__('输入你自定义链接，前一个URL: http://google.com. If you do not want to use this, just leave it blank.','HK'),
+			'id' => 'product_external_link',
+			'std' => '#',
+			'size' => '100',
+			'type' => 'text',
+	),
+
+	array(
+			'name' => esc_html__('定制特色图像', 'HK'),
+			'type' => 'title',
+			'desc' => esc_html__('如果你想显示在列表中的自定义图像，你可以在这里上传图片。和你也需要设置特色图像，这将是在其他地方显示。','HK'),
+	),
+
+	array(
+			'name' => esc_html__('特色图像','HK'),
+			'desc' => __('要上传图片点击“上传图片”按钮。或者你可以输入图像的URL。','HK'),
+			'id' => 'feature_image',
+			'std' => '',
+			'size' => '100',
+			'type' => 'upload',
+	),
+
+	array(
+			'name' => esc_html__('SEO 设置', 'HK'),
+			'type' => 'title',
+			'desc' => esc_html__('你可以从这篇文章/页的搜索引擎，自定义标题followable链接，添加meta关键字和meta描述。','HK'),
+	),
+
+	array(
+			'name' => esc_html__('SEO - 设置遵循','HK'),
+			'desc' => esc_html__('从这篇文章会被搜索引擎的链接显示。','HK'),
+			'id' => 'seo_follow',
+			'std' => 0,
+			'type' => 'checkbox',
+	),
+
+	array(
+			'name' => esc_html__('SEO - Noindex','HK'),
+			'desc' => esc_html__('设置页不会被搜索引擎索引显示。','HK'),
+			'id' => 'seo_noindex',
+			'std' => 0,
+			'type' => 'checkbox',
+	),
+
+	array(
+			'name' => esc_html__('SEO - 标题','HK'),
+			'desc' => esc_html__('输入你想显示的称号。例如：<title>你的标题在这里结束</title>','HK'),
+			'id' => 'seo_title_tags',
+			'std' => '',
+			'size' => '100',
+			'type' => 'text',
+	),
+
+	array(
+			'name' => esc_html__('SEO - 关键字','HK'),
+			'desc' => esc_html__('输入的关键字的逗号分隔的列表，你想与此页关联。例如：<meta name="keywords" content="keyword1, keyword2, keyword3" />','HK'),
+			'id' => 'seo_keywords',
+			'std' => '',
+			'rows' => '2',
+			'type' => 'textarea',
+	),
+
+	array(
+			'name' => esc_html__('SEO - 描述','HK'),
+			'desc' => esc_html__('进入一个逗号分隔的序列的描述你想结交这个页面。例:<meta name="description" content="This is your seo description of your site." />','HK'),
+			'id' => 'seo_description',
+			'std' => '',
+			'rows' => '2',
+			'class' => 'noborder',
+			'type' => 'textarea',
+	),
+
+);
+
+new meta_boxes_generator($config,$options);
+
+?>
