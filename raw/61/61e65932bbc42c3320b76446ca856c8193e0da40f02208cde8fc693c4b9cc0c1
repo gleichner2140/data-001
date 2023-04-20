@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta charset="<?php bloginfo( 'charset' ); ?>" />
+<title><?php
+	/*
+	 * Print the <title> tag based on what is being viewed.
+	 */
+	global $page, $paged;
+
+	wp_title( '|', true, 'right' );
+
+	// Add the blog name.
+	bloginfo( 'name' );
+
+	// Add the blog description for the home/front page.
+	$site_description = get_bloginfo( 'description', 'display' );
+	if ( $site_description && ( is_home() || is_front_page() ) )
+		echo " | $site_description";
+
+	?></title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
+<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+<?php
+	/* We add some JavaScript to pages with the comment form
+	 * to support sites with threaded comments (when in use).
+	 */
+	if ( is_singular() && get_option( 'thread_comments' ) )
+		wp_enqueue_script( 'comment-reply' );
+
+	/* Always have wp_head() just before the closing </head>
+	 * tag of your theme, or you will break many plugins, which
+	 * generally use this hook to add elements to <head> such
+	 * as styles, scripts, and meta tags.
+	 */
+	wp_head();
+?>
+<?php 
+$google_menufont=get_option('google_menufont')?get_option('google_menufont'):'';
+$google_slidertitlefont=get_option('google_slidertitlefont')?get_option('google_slidertitlefont'):'Oswald';
+$google_bodyfont=get_option('google_bodyfont')?get_option('google_bodyfont'):'News Cycle';
+$google_generaltitlefont=get_option('google_generaltitlefont')?get_option('google_generaltitlefont'):'Open Sans';
+ $gtitlefont = str_replace( ' ', '+', $google_titlefont); 
+ $gbodyfont = str_replace( ' ', '+', $google_bodyfont); 
+ $gmenufont = str_replace( ' ', '+', $google_menufont); 
+ $slidertitlefont = str_replace( ' ', '+', $google_slidertitlefont); 
+ $generaltitlefont = str_replace( ' ', '+', $google_generaltitlefont); 
+ 
+?>
+<?php if($google_menufont !="") { ?>
+<link  rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=<?php echo $gmenufont; ?>'>
+<?php } ?>
+<?php if($google_bodyfont !="") { ?>
+<link  rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=<?php echo $gbodyfont; ?>'>
+<?php } ?>
+<?php if($google_slidertitlefont !="") { ?>
+<link  rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=<?php echo $slidertitlefont; ?>'>
+<?php } ?>
+<?php if($generaltitlefont !="") { ?>
+<link  rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=<?php echo $generaltitlefont; ?>'>
+<?php } ?>
+
+</head>
+<body <?php body_class( $class ); ?>>
+<div class="<?php echo get_option('layoutoption')? get_option('layoutoption'): 'fluid' ;?>">
+
+<div id="header-wrapper">
+<div id="header">
+    <div id="logo">
+        <?php  $logo=get_option('logo'); ?>
+        <?php if($logo) { ?>
+        <a href="<?php echo home_url(); ?> "> <img src="<?php echo $logo; ?>" alt="<?php the_title(); ?>"  />  </a>
+        <?php }else{ ?>
+        
+        <a href="<?php echo home_url(); ?> "> <img src="<?php echo get_template_directory_uri()?>/images/logo.png" alt="<?php the_title(); ?>" /> </a> <?php } ?>
+    </div>
+
+	<div id="call_wrapper">
+		<div id="call">			
+			<?php if ( !function_exists('dynamic_sidebar')|| !dynamic_sidebar('top_header_right') ) : ?>
+             <strong> <?php _e( 'Have any query?', 'prominent' ); ?> </strong><br>
+            <h3> <?php _e( 'Call Us Free: 1-400-123-4567', 'prominent' ); ?> </h3>
+           
+			<?php endif; ?>			
+		</div>
+	</div>
+</div>	
+</div>
+
+<div class="clear"></div>
+  <div class="navigation-wrapper">
+    <div class="top-navigation">
+     <div class="jqueryslidemenu">
+        <?php  wp_nav_menu( array( 'container_id' => 'myslidemenu' ) ); ?>
+    </div>
+      <span class="menu-right">&nbsp;</span> 
+	</div>
+  </div>
+
+<div id="mid-column-wrapper">
