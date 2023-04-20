@@ -1,0 +1,121 @@
+<?php 
+/*
+* ----------------------------------------------------------------------------------------------------
+* Footer Page
+* @PACKAGE BY HAWKTHEME
+* ----------------------------------------------------------------------------------------------------
+*/
+$options = array(
+
+	array(
+			'name' => esc_html__('页脚设置', 'HK'),
+			'type' => 'title'
+	),
+
+	array('type' => 'head'),
+
+	array(
+			'name' => esc_html__('启用页脚小工具','HK'),
+			'desc' => esc_html__("如果此选项是肯定的，你将在全球启用页脚部件的区域。",'HK'),
+			'id' => 'enable_footer_widgets',
+			'std' => 'yes',
+			'options' => array(
+				'yes' => esc_html__('Yes','HK'),
+				'no' => esc_html__('No','HK'),
+			),
+			'type' => 'radio',
+	),
+
+	array(
+			'name' => esc_html__('页脚小工具列表','HK'),
+			'desc' => esc_html__('选择一个栏页脚部件在您的区域。','HK'),
+			'id' => 'widget_columns',
+			'std' => '3',
+			'options' => array(
+				'1' => esc_html__('栏目1','HK'),
+				'2' => esc_html__('栏目2','HK'),
+				'3' => esc_html__('栏目3','HK'),
+				'4' => esc_html__('栏目4','HK'),
+			),
+			'type' => 'select',
+	),
+
+	array(
+			'name' => esc_html__('版权信息','HK'),
+			'desc' => __('在页脚中显示版权信息。','HK'),
+			'id' => 'copyright',
+			'std' => '版权所有@ <a href="'. home_url( '/' ) . '">' .esc_attr( get_bloginfo('name') ).'</a>, 隐私声明的条款和条件。',
+			'rows' => '3',
+			'type' => 'textarea',
+	),
+
+	array(
+			'name' => esc_html__('是否显示WordPress的链接','HK'),
+			'desc' => esc_html__('显示“本站由WordPress的”页脚？','HK'),
+			'id' => 'wordpress_link',
+			'std' => 1,
+			'type' => 'checkbox',
+	),
+
+	array(
+			'name' => esc_html__('第一条记录 ','HK'),
+			'desc' => esc_html__('显示在页脚上方的按钮？ ','HK'),
+			'id' => 'go_top',
+			'std' => 1,
+			'type' => 'checkbox',
+	),
+
+	array('type' => 'foot'),
+
+	array(
+			'name' => esc_html__('Logo', 'HK'),
+			'type' => 'sub_title',
+	),
+
+	array('type' => 'head'),
+
+	array(
+			'name' => esc_html__('图像','HK'),
+			'desc' => esc_html__('要上传图片点击“上传图片”按钮。一旦图像上传，它会给你的各种选项.','HK'),
+			'id' => 'logo',
+			'std' => ASSETS_URI.'/images/logo-small.png',
+			'title' => '输入网址或上传您的标志形象：',
+			'size' => '100',
+			'button' => esc_html__('上传图标 ','HK'),
+			'type' => 'upload',
+	),
+
+	array(
+			'name' => esc_html__('从顶部位置','HK'),
+			'id' => 'logo_top',
+			'std' => '10',
+			'size' => '5',
+			'unit' => '像素',
+			'type' => 'text',
+	),
+
+	array(
+			'name' => esc_html__('从左边的位置','HK'),
+			'id' => 'logo_left',
+			'std' => '0',
+			'size' => '5',
+			'unit' => '像素',
+			'type' => 'text',
+	),
+
+	array(
+			'name' => esc_html__('从右边位置','HK'),
+			'id' => 'logo_right',
+			'std' => '30',
+			'size' => '5',
+			'unit' => '像素',
+			'type' => 'text',
+	),
+
+	array('type' => 'foot'),
+
+);
+
+return array('auto' => true, 'name' => 'footer', 'options' => $options );
+
+?>
