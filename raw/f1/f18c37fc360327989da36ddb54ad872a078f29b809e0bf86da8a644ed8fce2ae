@@ -1,0 +1,16 @@
+<div class="sidebar">
+	
+    <?php
+		wp_reset_query();
+	if ( ! dynamic_sidebar( 'Blog Sidebar' ) ) { ?>
+    <div class="widget-container">
+     <div class="sidebar_inner_line">
+        <h3 class="widget-title">
+            <?php _e( 'Widget Title', 'prominent' ); ?>
+        </h3>
+        <p> <?php _e("To edit this sidebar, go to admin backend's <strong><em>Appearance -> Widgets</em></strong> and place widgets into the <strong>Appropriate</strong> Widget Area", 'prominent'); ?></p>
+       </div>
+    </div>
+    <?php }	?>
+   
+</div>
