@@ -1,0 +1,64 @@
+<script src="<?php echo get_template_directory_uri(); ?>/js/jquery.sudoSlider.js"></script>
+<script type="text/javascript" >
+	jQuery(document).ready(function(){	
+			var sudoSlider = jQuery("#slider_portfolio").sudoSlider({
+				numeric:true,
+				prevNext:false,
+				continuous:true
+			});
+		});	
+</script>
+<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+
+<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+    <div class="box_outer">
+    <div class="box_inner">
+        <?php 
+                    $args = array( 'post_type' => 'attachment', 'orderby' => 'menu_order', 'order' => 'ASC', 'post_mime_type' => 'image' ,'post_status' => null, 'post_parent' => $post->ID );
+                    $attachments = get_posts($args);
+					if(count($attachments) >1) { $sliderid="slider_portfolio";}else{  $sliderid="slider_portfolio_single_image"; }
+					?>
+        <div id="<?php echo $sliderid; ?>">
+            <ul>
+                <?php
+                    if ($attachments) {
+                    foreach ( $attachments as $attachment ) { 
+                ?>
+                <li>
+                    <?php  global $width;
+                    $thumb = $attachment->ID; 
+                    $timthumb=get_option('timthumb');					
+                        if($thumb) {
+                        if($timthumb!="true"){	?>
+                    <?php  $imgurl=wp_get_attachment_url( $thumb); ?>
+                    <img src="<?php echo get_template_directory_uri(); ?>/timthumb.php?src=<?php echo $imgurl; ?>&amp;w=<?php echo $width;?>&amp;h=400&amp;zc=1" alt="<?php the_title(); ?>" class="" />
+                    <?php
+                            }else{
+                            $image = vt_resize( $thumb, '',$width,'400', true );
+                        ?>
+                    <img src="<?php echo $image[url]; ?>" width="<?php echo $image[width]; ?>"  />
+                    <?php } } ?>
+                </li>
+                <?php }	} ?>
+            </ul>
+        </div>
+        </div>
+</div>
+        <div class="clear"></div>
+        <!--  End Slider 2 -->
+        <?php if(count($attachments) >1) { $slide_desc_class="portfolio_desc";}else{  $slide_desc_class="portfolio_desc_with_single_image"; }?>
+        <div class="<?php echo $slide_desc_class; ?>">
+            <?php     	
+			 the_content(); 
+			 wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'prominent' ), 'after' => '</div>' ) ); 
+			edit_post_link( __( 'Edit', 'prominent' ), '<span class="edit-link">', '</span>' ); ?>
+        </div>
+    </div>
+
+<!-- End Ps -->
+<?php  
+ $commentsection = get_post_meta( get_the_ID(), 'commentsection', true );	
+if( $commentsection == "on") {
+comments_template( '', true );
+} ?>
+<?php endwhile; // end of the loop. ?>
