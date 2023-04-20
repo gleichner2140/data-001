@@ -1,0 +1,168 @@
+<?php
+function twitter_widgets() {
+	register_widget('twitter_widget');
+}
+class twitter_widget extends WP_Widget {
+function twitter_widget() {
+global $themename;
+		
+		$widget_ops = array( 'classname' => 'twitter_widget', 'description' => __('twitter媒体', 'prominent') );
+
+		
+		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'twitter_widget' );
+
+		
+		$this->WP_Widget('twitter_widget',$themename.'-twitter媒体', $widget_ops, $control_ops );
+	}
+
+	
+function widget($args,$instance ) {
+		extract( $args );
+$twitter_username = $instance['twitter_username'];
+$twitter_title = $instance['twitter_title'];
+$twitter_limits = $instance['twitter_limits'];
+
+	echo $before_widget;
+	echo $before_title;
+	echo $twitter_title;		
+	echo $after_title;
+	echo parse_cache_feed($twitter_username, $twitter_limits);
+	echo $after_widget;
+	
+}
+function update( $new_instance, $old_instance ) {
+	$instance = $old_instance;
+
+/* Strip tags for title and name to remove HTML (important for text inputs). */
+
+$instance['twitter_username'] = strip_tags( $new_instance['twitter_username'] );
+$instance['twitter_limits'] = strip_tags( $new_instance['twitter_limits'] );
+$instance['twitter_title'] = strip_tags( $new_instance['twitter_title'] );
+	return $instance;
+}
+
+function form( $instance ) {
+
+/*  dispaly form. */
+?>
+
+<p>
+<label for="<?php echo $this->get_field_id( 'twitte-_title' ); ?>"><?php _e('Title:', 'prominent'); ?></label>
+<input id="<?php echo $this->get_field_id( 'twitter_title' ); ?>" name="<?php echo $this->get_field_name( 'twitter_title' ); ?>" value="<?php echo $instance['twitter_title']; ?>" type="text" style="width:100%;" />
+</p>
+
+<p>
+<label for="<?php echo $this->get_field_id( 'twitter_username' ); ?>"><?php _e('User Name:', 'prominent'); ?></label>
+<input id="<?php echo $this->get_field_id( 'twitter_username' ); ?>" type="text" name="<?php echo $this->get_field_name( 'twitter_username' ); ?>" value="<?php echo $instance['twitter_username']; ?>" style="width:100%;" />
+</p>
+
+<p>
+<label for="<?php echo $this->get_field_id( 'twitter_limits' ); ?>"><?php _e('Number Of Links:', 'prominent'); ?></label>
+<input id="<?php echo $this->get_field_id( 'twitter_limits' ); ?>" type="text" name="<?php echo $this->get_field_name( 'twitter_limits' ); ?>" value="<?php echo $instance['twitter_limits']; ?>" style="width:100%;" />
+</p>
+
+<?php } } 
+add_action( 'widgets_init', 'twitter_widgets' );
+?>
+<?php
+define("SECOND", 1);
+define("MINUTE", 60 * SECOND);
+define("HOUR", 60 * MINUTE);
+define("DAY", 24 * HOUR);
+define("MONTH", 30 * DAY);
+function relativeTime($time)
+{
+	$delta = strtotime('+2 hours') - $time;
+	if ($delta < 2 * MINUTE) {
+		return "1 min ago";
+	}
+	if ($delta < 45 * MINUTE) {
+		return floor($delta / MINUTE) . " min ago";
+	}
+	if ($delta < 90 * MINUTE) {
+		return "1 hour ago";
+	}
+	if ($delta < 24 * HOUR) {
+		return floor($delta / HOUR) . " hours ago";
+	}
+	if ($delta < 48 * HOUR) {
+		return "yesterday";
+	}
+	if ($delta < 30 * DAY) {
+		return floor($delta / DAY) . " days ago";
+	}
+	if ($delta < 12 * MONTH) {
+		$months = floor($delta / DAY / 30);
+		return $months <= 1 ? "1 month ago" : $months . " months ago";
+	} else {
+		$years = floor($delta / DAY / 365);
+		return $years <= 1 ? "1 year ago" : $years . " years ago";
+	}
+}
+
+
+
+function parse_cache_feed($username,$limit) {
+	global $twitter_options;
+	global $wpdb;
+	include_once(ABSPATH . WPINC . '/rss.php');
+	$messages = fetch_rss('http://twitter.com/statuses/user_timeline/'.$username.'.rss');
+
+	if ($username == '') {
+	$out1.='<blockquote><p>';
+	$out1.="Please enter your twitter Id in place of username";
+	$out1.="</p></blockquote>";
+	}else{
+		
+	if ( empty($messages->items) ) {
+	$out1.='<blockquote><p>';
+	$out1.="No public Twitter messages";
+		$out1.="</p></blockquote>";
+		}else{
+				
+	$i = 0;
+	
+	foreach ( $messages->items as $message ) {
+	
+		$out1.='<div class="twitter_text">';
+		$msg = " ".substr(strstr($message['description'],': '), 2, strlen($message['description']))." ";
+		
+		if($encode_utf8) $msg = utf8_encode($msg);
+		$link = $message['link'];
+		$time = $message['pubdate'];
+		$msg = hyperlinks($msg);
+		$msg = twitter_users($msg);
+		$out1 .= $msg;
+		$out1 .= '<small>(' . relativeTime(strtotime($time)) . '&nbsp;)</small>';
+		$out1.='</div>';	
+//$out .= '<a class="target_blank" href="' .$link. '" title="' .relativeTime(strtotime($time)). '">' .$msg. '</a>';
+	$i++;
+			if ( $i >= $limit ) break;	
+		
+
+}
+}
+}
+
+return $out1;
+}
+function hyperlinks($text) {
+    // Props to Allen Shaw & webmancers.com
+    // match protocol://address/path/file.extension?some=variable&another=asf%
+    //$text = preg_replace("/\b([a-zA-Z]+:\/\/[a-z][a-z0-9\_\.\-]*[a-z]{2,6}[a-zA-Z0-9\/\*\-\?\&\%]*)\b/i","<a href=\"$1\" class=\"twitter-link\">$1</a>", $text);
+    $text = preg_replace('/\b([a-zA-Z]+:\/\/[\w_.\-]+\.[a-zA-Z]{2,6}[\/\w\-~.?=&%#+$*!]*)\b/i',"<a href=\"$1\" class=\"twitter-link\">$1</a>", $text);
+    // match www.something.domain/path/file.extension?some=variable&another=asf%
+    //$text = preg_replace("/\b(www\.[a-z][a-z0-9\_\.\-]*[a-z]{2,6}[a-zA-Z0-9\/\*\-\?\&\%]*)\b/i","<a href=\"http://$1\" class=\"twitter-link\">$1</a>", $text);
+    $text = preg_replace('/\b(?<!:\/\/)(www\.[\w_.\-]+\.[a-zA-Z]{2,6}[\/\w\-~.?=&%#+$*!]*)\b/i',"<a href=\"http://$1\" class=\"twitter-link\">$1</a>", $text);    
+    
+    // match name@address
+    $text = preg_replace("/\b([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})\b/i","<a href=\"mailto://$1\" class=\"twitter-link\">$1</a>", $text);
+        //mach #trendingtopics. Props to Michael Voigt
+    $text = preg_replace('/([\.|\,|\:|\\縷\>|\{|\(]?)#{1}(\w*)([\.|\,|\:|\!|\?|\>|\}|\)]?)\s/i', "$1<a href=\"http://twitter.com/#search?q=$2\" class=\"twitter-link\">#$2</a>$3 ", $text);
+    return $text;
+}
+function twitter_users($text) {
+       $text = preg_replace('/([\.|\,|\:|\\縷\>|\{|\(]?)@{1}(\w*)([\.|\,|\:|\!|\?|\>|\}|\)]?)\s/i', "$1<a href=\"http://twitter.com/$2\" class=\"twitter-user\">@$2</a>$3 ", $text);
+       return $text;
+}     
+?>
