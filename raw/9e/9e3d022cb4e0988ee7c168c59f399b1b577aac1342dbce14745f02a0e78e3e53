@@ -1,0 +1,89 @@
+<?php
+/*
+* ----------------------------------------------------------------------------------------------------
+* Single
+* @PACKAGE BY HAWKTHEME
+* ----------------------------------------------------------------------------------------------------
+*/
+get_header(); 
+$time = theme_get_option('blog','enable_time');
+$comment = theme_get_option('blog','enable_comment');
+$author = theme_get_option('blog','enable_author');
+$category = theme_get_option('blog','enable_category');
+
+?>
+<!--Begin Container-->
+<div id="container" class="clearfix side-right">
+
+<?php theme_page_banner(); ?> 
+
+<div id="container-wrap" class="col-width clearfix">
+
+<nav class="single-page-navigation clearfix">
+<?php previous_post_link( '%link', __( '<span class="nav-previous">Previous Post Item</span>', 'HK' ) ); ?>
+<?php next_post_link( '%link', __( '<span class="nav-next">Next Post Item</span>', 'HK' )); ?>
+</nav>
+
+<!--Begin Content-->
+<article id="content">
+<?php if (have_posts()) : the_post(); ?>
+
+<div class="post post-single post-blog-single" id="post-<?php the_ID(); ?>">
+
+	<div class="post-entry">
+		<h2><?php the_title(); ?></h2>
+		<p class="post-meta">
+		<?php if($author == true) : ?><?php esc_html_e('Written by ','HK'); the_author_posts_link(); ?><span>//</span><?php endif; ?>
+		<?php if($time == true) : ?><?php printf( __('%1$s', 'HK'), get_the_time('F j, Y') ); ?><span>//</span><?php endif; ?>
+		<?php if($comment == true) : ?><?php comments_popup_link(__('No Comment', 'HK'), __('1Comment', 'HK'), __('%Comments', 'HK'), '', __('Comment Off', 'HK')); ?><span>//</span><?php endif; ?>
+		<?php if($category == true) : ?><?php the_category(', '); ?><span>//</span><?php endif; ?>
+		<?php edit_post_link( __( 'Edit', 'HK' ), '', '<span>//</span>' ); ?>
+		</p>
+	</div>
+
+	<?php if ( has_post_thumbnail() ) : ?>
+	<div class="post-thumb">
+	<a href="<?php echo theme_large_image_uri(); ?>" title="<?php the_title_attribute(); ?>" class="image-link" data-id="fancybox">
+	<?php the_post_thumbnail('650-330'); ?>
+	</a>
+	</div>
+	<?php endif; ?>
+
+	<div class="post-content"><?php the_content(); ?></div>
+	<!--end post content-->
+
+	<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'HK' ), 'after' => '</div>' ) ); //end link page ?>
+
+	<?php echo get_the_term_list( $post->ID, 'post_tag', '<div class="tags">'. __('<span>Tagged:</span> ','HK'), ' , ', '</div>' ); ?>
+
+</div>
+<!--end post page-->
+
+<div class="related-posts related-posts-blog">
+<h3><?php esc_html_e('Related Posts','HK'); ?></h3>
+<?php theme_related_post('category', $lightbox = 'yes'); ?>
+</div>
+
+<?php theme_post_author(); ?>
+
+<?php comments_template( '', true ); ?>
+
+<?php else : ?>
+
+<!--Begin No Post-->
+<div class="no-post">
+	<h2><?php esc_html_e('Not Found', 'HK'); ?></h2>
+	<p><?php esc_html_e("Sorry, but you are looking for something that isn't here.", 'HK'); ?></p>
+</div>
+<!--End No Post-->
+
+<?php endif; ?>
+</article>
+<!--End Content-->
+
+<?php theme_blog_sidebar(); ?> 
+
+</div>
+</div>
+<!--End Container-->
+<?php get_footer(); ?>
