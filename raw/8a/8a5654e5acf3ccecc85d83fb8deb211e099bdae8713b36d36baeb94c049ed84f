@@ -1,0 +1,119 @@
+<?php
+
+/*** TOGGLE
+------------------------------*/
+function kaya_shortcode_toggle_content( $atts, $content = null ) {
+	extract(shortcode_atts(array(
+        'heading'      => '',
+    ), $atts));
+	$out = '<div class="toggle_container">';
+	$out.= '<div class="trigger">' .$heading. '</div>';
+	$out .= '<div class="toggle_content" style="display: none;">';
+	$out .= '<div class="block">';
+	$out .= do_shortcode($content);
+	$out .= '</div>';
+	$out .= '</div>';
+	$out .= '</div>';
+   return $out;
+}
+add_shortcode('toggle_content', 'kaya_shortcode_toggle_content');
+
+// tabs
+function kaya_shortcode_tabs( $atts, $content = null ) {
+	extract(shortcode_atts(array(
+    ), $atts));
+	
+	
+	$out.= '<div class="tabs_container">';
+	$out.= '<ul class="tabs">';
+	foreach ($atts as $tab) {
+		$out .= '<li><a href="#">' .$tab. '</a></li>';
+	}
+	$out .= '</ul>';
+
+	$out .= do_shortcode($content) .'<div class="clear"></div></div>';
+	
+	return $out;
+	
+}
+add_shortcode('tabs', 'kaya_shortcode_tabs');
+/*** TAB PANES
+------------------------------*/
+function tabpanes( $atts, $content = null ) {
+	extract(shortcode_atts(array(
+    ), $atts));
+	
+	$out= '<div class="tab_content">' . do_shortcode($content) .'</div>';
+
+	return $out;
+}
+add_shortcode('tab', 'tabpanes');
+
+
+
+
+// vtabs
+function kaya_shortcode_vtabs( $atts, $content = null ) {
+	extract(shortcode_atts(array(
+    ), $atts));
+	
+	$out.= '<div class="vtabs_container">';
+	$out.= '<ul class="vtabs">';
+	foreach ($atts as $tab) {
+		$out.= '<li><a href="#">' .$tab. '</a></li>';
+	}
+	$out .= '</ul>';
+
+	$out .= do_shortcode($content) .'<div class="clear"></div></div>';
+	
+	return $out;
+	
+}
+add_shortcode('vtabs', 'kaya_shortcode_vtabs');
+/*** VTAB PANES
+------------------------------*/
+function vtabpanes( $atts, $content = null ) {
+	extract(shortcode_atts(array(
+    ), $atts));
+	
+	$out= '<div class="vtab_content">' . do_shortcode($content) .'</div>';
+	
+	return $out;
+	
+}
+add_shortcode('vtab', 'vtabpanes');
+
+// Home vtabs
+function kaya_shortcode_hvtabs( $atts, $content = null ) {
+	extract(shortcode_atts(array(
+    ), $atts));
+	
+	$out.= '<div class="hvtabs_container">';
+	$out.= '<div class="hvtabs_container_inner">';
+	$out.= '<ul class="hvtabs">';
+	foreach ($atts as $tab) {
+		$out.= '<li><h5><a href="#"><span></span>' .$tab. '</a></h5></li>';
+	}
+    
+	$out .= '</ul>';
+
+	$out .= do_shortcode($content) .'<div class="clear"></div></div></div>';
+	
+	return $out;
+	
+}
+add_shortcode('hvtabs', 'kaya_shortcode_hvtabs');
+/*** Home VTAB PANES
+------------------------------*/
+function hvtabpanes( $atts, $content = null ) {
+	extract(shortcode_atts(array(
+    ), $atts));
+	
+	$out= '<div class="hvtab_content">' . do_shortcode($content) .'</div>';
+	
+	return $out;
+	
+}
+add_shortcode('hvtab', 'hvtabpanes');
+
+?>
